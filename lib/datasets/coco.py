@@ -87,7 +87,7 @@ class coco(imdb):
     """
     Return the absolute path to image i in the image sequence.
     """
-    return self.image_path_from_index(self._image_index[i])
+    return self.image_file_name(self._image_index[i])
 
   def image_id_at(self, i):
     """
@@ -107,6 +107,20 @@ class coco(imdb):
                           self._data_name, file_name)
     assert osp.exists(image_path), \
       'Path does not exist: {}'.format(image_path)
+    return image_path
+
+  def image_file_name(self, index):
+    """
+    Get the real path of image instead of index path
+    eg: return image name 'budaodian20180830131536.jpg'
+        instead of coco_train_000000000001.jpg'
+    :param index:
+    :return: image_file_name
+    """
+    path = osp.join(self._data, 'images', self._data_name)
+    file_fistdir = os.listdir(path)
+    file_name = file_fistdir[index]
+    image_path = osp.join(path, file_name)
     return image_path
 
   def gt_roidb(self):

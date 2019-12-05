@@ -7,7 +7,9 @@ import datasets
 import numpy as np
 from model.utils.config import cfg
 from datasets.factory import get_imdb
-import PIL
+from PIL import Image
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 import pdb
 
 def prepare_roidb(imdb):
@@ -20,7 +22,7 @@ def prepare_roidb(imdb):
 
   roidb = imdb.roidb
   if not (imdb.name.startswith('coco')):
-    sizes = [PIL.Image.open(imdb.image_path_at(i)).size
+    sizes = [Image.open(imdb.image_path_at(i)).size
          for i in range(imdb.num_images)]
          
   for i in range(len(imdb.image_index)):
